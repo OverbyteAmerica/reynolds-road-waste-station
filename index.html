@@ -1,422 +1,999 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Reynolds Road Transfer Station — Neighbor Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --color-background-primary:#0f1316;
-  --color-background-secondary:#0b1114;
-  --color-text-primary:#E6EEF6;
-  --color-text-secondary:#B7C2CC;
-  --color-text-tertiary:#8F9AA6;
-  --color-border-primary:#263038;
-  --color-border-secondary:#1a2226;
-  --color-border-tertiary:#21272b;
-  --color-link:#7FB4FF;
-  --border-radius-sm:6px;
-  --border-radius-md:10px;
-  --border-radius-lg:14px;
+:root {
+  --bg: #f2f2f7;
+  --surface: #ffffff;
+  --surface2: #f2f2f7;
+  --surface3: rgba(255,255,255,0.7);
+  --text: #1c1c1e;
+  --text2: #3a3a3c;
+  --text3: #636366;
+  --text4: #8e8e93;
+  --border: rgba(60,60,67,0.12);
+  --border2: rgba(60,60,67,0.07);
+  --red: #ff3b30;
+  --red-bg: #fff2f1;
+  --red-text: #c0392b;
+  --amber: #ff9500;
+  --amber-bg: #fff8ed;
+  --amber-text: #7d4e00;
+  --blue: #007aff;
+  --blue-bg: #eef4ff;
+  --blue-text: #0040aa;
+  --green: #34c759;
+  --green-bg: #edfbf1;
+  --green-text: #1a7a38;
+  --purple: #af52de;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.05);
 }
 
-html,body{height:100%;}
-body{background:var(--color-background-primary);color:var(--color-text-primary);font-family:Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui;line-height:1.5;font-size:13px;padding:1rem;}
-.sr-only{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-a{color:var(--color-link);text-decoration:underline}
-img{max-width:100%;height:auto;display:block}
-:focus{outline:2px solid var(--color-link);outline-offset:2px;border-radius:4px}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-*{box-sizing:border-box;margin:0;padding:0;}
-
-/* Dashboard & responsive layout */
-.container.dashboard{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:18px;padding:0 0 2rem}
-.container.dashboard > div:first-child{grid-column:1/-1}
-.container.dashboard > .main-nav{overflow:auto;padding:6px 0}
-.main-nav{gap:8px}
-.main-nav .mnav{white-space:nowrap}
-.mpanel{padding:0}
-.step-card,.finding,.voice-card,.party-row,.permit-row{transition:transform 0.08s ease}
-
-@media(min-width:900px){
-  .container.dashboard{grid-template-columns:260px 1fr;padding:0}
-  .container.dashboard > .main-nav{grid-column:1;position:sticky;top:1rem;align-self:start;display:flex;flex-direction:column;gap:8px;padding-right:12px}
-  .container.dashboard > .sidebar{grid-column:1}
-  .container.dashboard > .mpanel{grid-column:2}
-  .hero-stat{margin-bottom:1rem}
+html, body {
+  font-family: 'DM Sans', -apple-system, 'Helvetica Neue', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
 }
 
-@media(max-width:640px){
-  body{padding:12px}
-  .page-head{padding:6px 0 10px}
-  .main-nav{display:flex;gap:8px;overflow:auto;padding:6px 2px;border-bottom:1px solid var(--color-border-tertiary)}
-  .mnav{flex:0 0 auto;padding:8px 12px;font-size:13px}
-  .hs{padding:10px}
-  .hs-val{font-size:20px}
-  .hs-label{font-size:11px}
-  .step-header{gap:8px}
+/* ── HEADER ── */
+.page-header {
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 0.5px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: env(safe-area-inset-top, 0px) 0 0;
 }
-.main-nav{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.5rem;}
-.mnav{padding:10px 16px;font-size:14px;font-weight:400;color:var(--color-text-secondary);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-0.5px;transition:color 0.15s;}
-.mnav.active{color:var(--color-text-primary);font-weight:500;border-bottom:2px solid var(--color-text-primary);}
-.mnav:hover:not(.active){color:var(--color-text-primary);}
-.mpanel{display:none;}.mpanel.active{display:block;}
-.sub-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
-.snav{font-size:12px;padding:4px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:none;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;}
-.snav.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500;}
-.spanel{display:none;}.spanel.active{display:block;}
+.header-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 20px 20px 16px;
+}
+.header-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.header-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+.header-sub {
+  font-size: 13px;
+  color: var(--text4);
+  font-weight: 400;
+}
 
-.hero-stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.5rem}
-.sidebar{display:block}
-.sidebar .hero-stat{display:grid;grid-auto-rows:1fr}
-.hs{background:#000;border-radius:var(--border-radius-md);padding:12px 14px;border:2px solid var(--color-border-tertiary);box-shadow:0 1px 0 rgba(0,0,0,0.4)}
-.hs-val{font-size:26px;font-weight:600;color:#ffffff;margin-bottom:6px}
-.hs-label{font-size:12px;color:var(--color-text-tertiary)}
+/* ── NAV TABS ── */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  padding: 0 20px;
+  max-width: 780px;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 16px 11px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text4);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -0.5px;
+  transition: color 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.tab-btn.active {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+  font-weight: 600;
+}
+.tab-btn:hover:not(.active) { color: var(--text2); }
 
-/* colored borders for stats */
-.hero-stat .hs:nth-child(1){border-color:#378ADD}
-.hero-stat .hs:nth-child(2){border-color:#1D9E75}
-.hero-stat .hs:nth-child(3){border-color:#E24B4A}
-.hero-stat .hs:nth-child(4){border-color:#BA7517}
-.hero-stat .hs:nth-child(5){border-color:#7F77DD}
+/* ── MAIN CONTENT ── */
+.content {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+.panel { display: none; }
+.panel.active { display: block; }
 
-.finding{border-left:3px solid var(--color-border-tertiary);padding:10px 14px;margin-bottom:10px;border-radius:0;}
-.finding.red{border-left-color:#E24B4A;background:#FCEBEB;}
-.finding.amber{border-left-color:#BA7517;background:#FAEEDA;}
-.finding.blue{border-left-color:#378ADD;background:#E6F1FB;}
-.finding-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;}
-.finding.red .finding-title{color:#791F1F;}
-.finding.amber .finding-title{color:#633806;}
-.finding.blue .finding-title{color:#0C447C;}
-.finding-body{font-size:13px;line-height:1.6;color:var(--color-text-secondary);}
-.finding.red .finding-body{color:#A32D2D;}
-.finding.amber .finding-body{color:#854F0B;}
-.finding.blue .finding-body{color:#185FA5;}
+/* ── HERO STATS ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+@media (max-width: 480px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 14px 14px 12px;
+  box-shadow: var(--shadow);
+  border: 0.5px solid var(--border2);
+}
+.stat-val {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--text4);
+  line-height: 1.3;
+  font-weight: 500;
+}
+.stat-card.red .stat-val { color: var(--red); }
+.stat-card.blue .stat-val { color: var(--blue); }
+.stat-card.green .stat-val { color: var(--green); }
+.stat-card.amber .stat-val { color: var(--amber); }
+.stat-card.purple .stat-val { color: var(--purple); }
 
-.step-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:12px;background:var(--color-background-primary);}
-.step-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;}
-.step-num{width:26px;height:26px;border-radius:50%;background:var(--color-text-primary);color:var(--color-background-primary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0;margin-top:1px;}
-.step-title{font-size:14px;font-weight:500;color:var(--color-text-primary);}
-.step-body{font-size:13px;color:var(--color-text-secondary);line-height:1.65;margin-bottom:8px;}
-.step-detail{font-size:12px;color:var(--color-text-tertiary);border-left:2px solid var(--color-border-tertiary);padding-left:10px;line-height:1.6;border-radius:0;}
-.contact-pill{display:inline-block;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:6px 10px;font-size:12px;color:var(--color-text-secondary);margin:4px 4px 0 0;line-height:1.4;}
-.contact-pill strong{color:var(--color-text-primary);font-weight:500;}
+/* ── FINDINGS ── */
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text4);
+  margin: 0 0 10px;
+  padding: 0 2px;
+}
+.finding {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  border: 0.5px solid var(--border2);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.finding-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+.finding.red .finding-icon { background: var(--red-bg); }
+.finding.amber .finding-icon { background: var(--amber-bg); }
+.finding.blue .finding-icon { background: var(--blue-bg); }
+.finding-content { flex: 1; min-width: 0; }
+.finding-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.finding-body {
+  font-size: 13px;
+  color: var(--text3);
+  line-height: 1.6;
+}
 
-.data-section{margin-bottom:1.25rem;}
-.ds-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;color:var(--color-text-secondary);margin-bottom:8px;}
-.data-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;}
-.data-row:last-child{border-bottom:none;}
-.dr-key{color:var(--color-text-secondary);flex-shrink:0;}
-.dr-val{color:var(--color-text-primary);text-align:right;font-size:12px;max-width:55%;}
+/* ── STEPS (connected) ── */
+.steps-intro {
+  font-size: 14px;
+  color: var(--text3);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  background: var(--blue-bg);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  border: 0.5px solid rgba(0,122,255,0.15);
+}
+.steps-flow {
+  position: relative;
+}
+.steps-flow::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 44px;
+  bottom: 28px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--blue) 0%, rgba(0,122,255,0.15) 100%);
+  border-radius: 2px;
+  z-index: 0;
+}
+.step-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 16px 16px 16px 14px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  border: 0.5px solid var(--border2);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+.step-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(0,122,255,0.3);
+  font-family: 'DM Mono', monospace;
+}
+.step-body { flex: 1; min-width: 0; }
+.step-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.step-desc {
+  font-size: 13px;
+  color: var(--text3);
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+.step-detail {
+  font-size: 12px;
+  color: var(--text3);
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.step-detail strong { color: var(--text2); font-weight: 600; }
 
-.tl-year{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:1rem 0 4px;padding-left:20px;}
-.tl-item{display:flex;gap:10px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start;}
-.tl-item:last-child{border-bottom:none;}
-.tl-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;}
-.tl-date{font-size:11px;color:var(--color-text-secondary);min-width:90px;padding-top:2px;}
-.tl-text{font-size:13px;color:var(--color-text-primary);line-height:1.5;flex:1;}
-.tl-flag{font-size:10px;padding:1px 7px;border-radius:20px;font-weight:500;display:inline-block;margin-top:3px;}
-.f-d{background:#FCEBEB;color:#A32D2D;}
-.f-k{background:#E6F1FB;color:#185FA5;}
-.f-n{background:#FAEEDA;color:#854F0B;}
-.f-w{background:#EEEDFE;color:#3C3489;}
-.dot-p{background:#378ADD;}.dot-c{background:#1D9E75;}.dot-d{background:#E24B4A;}
-.dot-pe{background:#BA7517;}.dot-i{background:#B4B2A9;}.dot-z{background:#7F77DD;}
+/* Connector arrow */
+.step-connector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: -6px 0 8px 14px;
+  padding-left: 58px;
+}
+.connector-line {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: var(--blue-bg);
+  border: 0.5px solid rgba(0,122,255,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
 
-.permit-row{display:flex;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start;}
-.permit-row:last-child{border-bottom:none;}
-.pbadge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;flex-shrink:0;white-space:nowrap;}
-.pb-i{background:#E6F1FB;color:#185FA5;}.pb-w{background:#EEEDFE;color:#3C3489;}.pb-p{background:#FAEEDA;color:#854F0B;}.pb-d{background:#FCEBEB;color:#A32D2D;}
-.permit-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;}
-.permit-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5;}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+@media (max-width: 400px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-card {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  border: 0.5px solid var(--border);
+}
+.contact-county {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text4);
+  margin-bottom: 3px;
+}
+.contact-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1px;
+}
+.contact-role {
+  font-size: 11px;
+  color: var(--text4);
+  margin-bottom: 4px;
+}
+.contact-note {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.4;
+}
 
-.party-row{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start;}
-.party-row:last-child{border-bottom:none;}
-.party-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0;}
-.av-g{background:#E6F1FB;color:#185FA5;}.av-o{background:#FAEEDA;color:#854F0B;}.av-c{background:#EEEDFE;color:#3C3489;}.av-n{background:#E1F5EE;color:#085041;}.av-x{background:#FCEBEB;color:#A32D2D;}
-.party-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;}
-.party-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5;}
-.party-conflict{font-size:11px;color:#A32D2D;margin-top:3px;padding-left:8px;border-left:2px solid #F09595;border-radius:0;}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg);
+  border-radius: 20px;
+  padding: 5px 12px 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text3);
+  border: 0.5px solid var(--border);
+  margin: 3px 4px 3px 0;
+}
+.pill-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.pill.blue { background: var(--blue-bg); color: var(--blue-text); border-color: rgba(0,122,255,0.15); }
+.pill.blue .pill-dot { background: var(--blue); }
+.pill.red { background: var(--red-bg); color: var(--red-text); border-color: rgba(255,59,48,0.15); }
+.pill.red .pill-dot { background: var(--red); }
+.pill.amber { background: var(--amber-bg); color: var(--amber-text); border-color: rgba(255,149,0,0.15); }
+.pill.amber .pill-dot { background: var(--amber); }
 
-.voice-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:8px;}
-.voice-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;}
-.voice-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6;}
+/* ── DATA TABS ── */
+.sub-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.sub-btn {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 0.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.sub-btn.active {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,122,255,0.3);
+}
+.sub-panel { display: none; }
+.sub-panel.active { display: block; }
 
-.buf-wrap{display:flex;height:32px;margin:10px 0 4px;border-radius:4px;overflow:hidden;}
-.buf-seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;}
+/* ── TIMELINE ── */
+.tl-year-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text4);
+  padding: 14px 0 6px;
+}
+.tl-item {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border2);
+  align-items: flex-start;
+}
+.tl-item:last-child { border-bottom: none; }
+.tl-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.tl-date {
+  font-size: 11px;
+  color: var(--text4);
+  min-width: 80px;
+  padding-top: 1px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+}
+.tl-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+  flex: 1;
+}
+.tl-flag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+.f-d { background: var(--red-bg); color: var(--red-text); }
+.f-k { background: var(--blue-bg); color: var(--blue-text); }
+.f-n { background: var(--amber-bg); color: var(--amber-text); }
+.f-w { background: #f0eeff; color: #5b3fa5; }
+.dot-p { background: var(--blue); }
+.dot-c { background: var(--green); }
+.dot-d { background: var(--red); }
+.dot-pe { background: var(--amber); }
+.dot-i { background: var(--text4); }
+.dot-z { background: var(--purple); }
+
+/* ── CARDS / ROWS ── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  border: 0.5px solid var(--border2);
+  overflow: hidden;
+}
+.card + .card { margin-top: 12px; }
+.card-header {
+  padding: 14px 16px 10px;
+  border-bottom: 0.5px solid var(--border2);
+}
+.card-header-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text4);
+}
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 0.5px solid var(--border2);
+  font-size: 13px;
+}
+.data-row:last-child { border-bottom: none; }
+.dr-key { color: var(--text3); flex-shrink: 0; }
+.dr-val { color: var(--text); text-align: right; font-weight: 500; max-width: 55%; }
+
+.permit-row {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 0.5px solid var(--border2);
+  align-items: flex-start;
+}
+.permit-row:last-child { border-bottom: none; }
+.pbadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 3px 9px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+.pb-i { background: var(--green-bg); color: var(--green-text); }
+.pb-w { background: #f0eeff; color: #5b3fa5; }
+.pb-p { background: var(--amber-bg); color: var(--amber-text); }
+.pb-d { background: var(--red-bg); color: var(--red-text); }
+.permit-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.permit-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+.party-row {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 0.5px solid var(--border2);
+  align-items: flex-start;
+}
+.party-row:last-child { border-bottom: none; }
+.party-av {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.av-g { background: var(--blue-bg); color: var(--blue-text); }
+.av-o { background: var(--amber-bg); color: var(--amber-text); }
+.av-c { background: #f0eeff; color: #5b3fa5; }
+.av-n { background: var(--green-bg); color: var(--green-text); }
+.av-x { background: var(--red-bg); color: var(--red-text); }
+.party-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.party-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+.party-conflict { font-size: 11px; color: var(--red-text); margin-top: 4px; padding-left: 8px; border-left: 2px solid rgba(255,59,48,0.4); }
+
+.voice-card {
+  padding: 12px 16px;
+  border-bottom: 0.5px solid var(--border2);
+}
+.voice-card:last-child { border-bottom: none; }
+.voice-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.voice-text { font-size: 13px; color: var(--text3); line-height: 1.6; }
+
+.q-item {
+  padding: 12px 16px;
+  border-bottom: 0.5px solid var(--border2);
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.q-item:last-child { border-bottom: none; }
+
+/* ── ACREAGE CONFLICT ── */
+.conflict-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 12px 16px;
+}
+.conflict-box {
+  background: var(--red-bg);
+  border: 0.5px solid rgba(255,59,48,0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+.conflict-label { font-size: 10px; font-weight: 700; color: var(--red-text); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.conflict-val { font-size: 24px; font-weight: 700; color: var(--red-text); letter-spacing: -0.03em; }
+
+/* ── CREEK BUFFER ── */
+.buf-wrap {
+  display: flex;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 10px 16px 6px;
+}
+.buf-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ── MISC ── */
+.note {
+  font-size: 12px;
+  color: var(--text4);
+  padding: 8px 16px 12px;
+  line-height: 1.5;
+}
+.card-group-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text4);
+  margin: 18px 0 8px;
+  padding: 0 2px;
+}
 </style>
+</head>
+<body>
 
-<h2 class="sr-only" style="position:absolute;left:-9999px;">Reynolds Road Waste Transfer Station — Neighbor Summary Report</h2>
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Paulding County, GA</div>
+    <h1 class="header-title">Reynolds Road<br>Waste Transfer Station</h1>
+    <div class="header-sub">Neighbor summary · All findings · Last updated May 2026</div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showPanel('what', this)">What Happened</button>
+    <button class="tab-btn" onclick="showPanel('steps', this)">What To Do</button>
+    <button class="tab-btn" onclick="showPanel('data', this)">Supporting Data</button>
+  </div>
+</header>
 
-<div class="container dashboard" style="padding:0 0 2rem;">
+<main class="content">
 
-<div style="padding:1.25rem 0 1rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.5rem;">
-  <div style="font-size:19px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;">Reynolds Road Waste Transfer Station</div>
-  <div style="font-size:13px;color:var(--color-text-secondary);">Paulding County, GA — Neighbor summary · All sections</div>
-</div>
+  <!-- ══ WHAT HAPPENED ══ -->
+  <div id="panel-what" class="panel active">
 
-<div class="main-nav">
-  <button class="mnav active" onclick="showMain('what',this)">What happened</button>
-  <button class="mnav" onclick="showMain('nextsteps',this)">What to do</button>
-  <button class="mnav" onclick="showMain('data',this)">Supporting data</button>
-</div>
-
-  <aside class="sidebar" aria-label="Summary stats">
-    <div class="hero-stat">
-      <div class="hs"><div class="hs-val">0</div><div class="hs-label">Public hearings — ever</div></div>
-      <div class="hs"><div class="hs-val">0</div><div class="hs-label">Operational conditions imposed</div></div>
-      <div class="hs"><div class="hs-val">0</div><div class="hs-label">Traffic studies conducted</div></div>
-      <div class="hs"><div class="hs-val">20 yr</div><div class="hs-label">Lease with Capital Waste Services</div></div>
-      <div class="hs"><div class="hs-val">1,660+</div><div class="hs-label">Petition signatures</div></div>
+    <div class="stat-grid">
+      <div class="stat-card red"><div class="stat-val">0</div><div class="stat-label">Public hearings held — ever</div></div>
+      <div class="stat-card red"><div class="stat-val">0</div><div class="stat-label">Operational conditions imposed</div></div>
+      <div class="stat-card red"><div class="stat-val">0</div><div class="stat-label">Traffic studies conducted</div></div>
+      <div class="stat-card amber"><div class="stat-val">20yr</div><div class="stat-label">Lease with Capital Waste Services</div></div>
+      <div class="stat-card blue"><div class="stat-val">1,660+</div><div class="stat-label">Petition signatures</div></div>
+      <div class="stat-card amber"><div class="stat-val">2021</div><div class="stat-label">Year neighbors were locked out</div></div>
     </div>
-  </aside>
 
-<!-- WHAT HAPPENED -->
-<div id="mpanel-what" class="mpanel active">
-  
+    <p class="section-label">Critical findings</p>
 
-  <div class="finding red">
-    <div class="finding-title">The whole process happened without neighbors knowing</div>
-    <div class="finding-body">The county purchased the land in 2021, selected an operator in 2024, approved a 20-year lease, and issued construction permits — all without a single public hearing. Community Development Director Ann Lippmann confirmed this in writing on April 20, 2026. Because the property has been zoned industrial since 1969, no rezoning was needed — and without rezoning, no hearing was ever legally required.</div>
-  </div>
-
-  <div class="finding red">
-    <div class="finding-title">There are no county rules on hours, trucks, or odor</div>
-    <div class="finding-body">The county applied zero operational conditions during plan review. What time trucks can arrive, where they stage, how odor is managed — none of it is governed by anything Paulding County can enforce. It all falls to the private contract with Capital Waste Services and GA EPD state rules, neither of which neighbors have seen.</div>
-  </div>
-
-  <div class="finding red">
-    <div class="finding-title">No traffic study was done, despite a weight-limit road</div>
-    <div class="finding-body">The Northwest Georgia Regional Commission exempted this project from a Development of Regional Impact review — which meant no formal traffic study was ever required. Rosedale Drive, the primary truck access road, is a two-lane residential road with a strict 18-ton weight limit. Tractor-trailers will exceed that limit. GDOT is reportedly in ongoing discussions with the county but no plan has been made public.</div>
-  </div>
-
-  <div class="finding amber">
-    <div class="finding-title">The county's own attorney flagged a cancer-chemical risk</div>
-    <div class="finding-body">At the April 14, 2026 Work Session, the county attorney raised PFAS ("forever chemicals") contamination as a real risk tied to the county's waste facilities. The county retained the law firm Arnold and Nitkin LLP on contingency to pursue litigation against PFAS manufacturers — an implicit admission that contamination of groundwater is a foreseeable outcome.</div>
-  </div>
-
-  <div class="finding amber">
-    <div class="finding-title">Construction violated a stream buffer and triggered a stop work order</div>
-    <div class="finding-body">On April 6, 2026, a county inspector issued both a Stop Work Order and a Stream Buffer Violation — meaning work had been done inside the protected buffer zones near the creek. The site was marked "in compliance" the following week, but no corrective action documentation has been made public.</div>
-  </div>
-
-  <div class="finding amber">
-    <div class="finding-title">Key documents in the plan set contradict each other</div>
-    <div class="finding-body">The area of land to be disturbed is reported as 12.24 acres in hydrology and permit documents, and as 10.86 acres in clearing and grading submittals — a 1.38-acre gap. This number determines what erosion controls are required and how much bonding the county holds. Which figure was used for the Land Disturbance Permit is not publicly confirmed.</div>
-  </div>
-
-  <div class="finding blue">
-    <div class="finding-title">Neighbors across two counties are already organized and on record</div>
-    <div class="finding-body">Over 1,660 people signed the Change.org petition. Residents of Menllo Station (Paulding) and Warren Creek (Cobb County) both spoke publicly. Powder Springs Councilmember Raja Antone submitted a formal statement demanding relocation. Cobb County Commissioner Monique Sheffield is actively working with Paulding officials. The Ozora Road transfer station in Gwinnett County was completely withdrawn after similar community opposition — that's a real precedent.</div>
-  </div>
-</div>
-
-<!-- WHAT TO DO -->
-<div id="mpanel-nextsteps" class="mpanel">
-  <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1.25rem;">Five concrete actions, in order of priority. Start with Step 1 — nothing else is enforceable until you know what rules actually apply.</div>
-
-  <div class="step-card">
-    <div class="step-header"><div class="step-num">1</div><div class="step-title">Get the two documents that govern everything</div></div>
-    <div class="step-body">All operational rules — hours, truck staging, odor, noise — live in exactly two documents: the <strong style="font-weight:500">Capital Waste Services operating contract</strong> and the <strong style="font-weight:500">GA EPD Notification of Permit by Rule</strong> (Section 391-3-4-.06(3)(b)). File an Open Records Request under the Georgia Open Records Act (O.C.G.A. § 50-18-70). The county must respond within 3 business days.</div>
-    <div class="step-detail">
-      Also request: Phase 3 Final Erosion Control Plan (and its submission date vs. the Dec 22, 2025 LDP) · April 6, 2026 Stop Work Order documentation and any GA EPD corrective action · The official LOD figure used for the LDP (12.24 or 10.86 acres) · The NW Georgia Regional Commission DRI exemption letter
-    </div>
-    <div style="margin-top:10px;">
-      <div class="contact-pill">File with: <strong>Paulding County Clerk's Office</strong></div>
-    </div>
-  </div>
-
-  <div class="step-card">
-    <div class="step-header"><div class="step-num">2</div><div class="step-title">Contact the right official for your county</div></div>
-    <div class="step-body">Different neighbors, different reps. Use the specific person whose district actually covers you — or your concern may be redirected.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
-      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;">
-        <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Paulding County (Menllo Station)</div>
-        <div style="font-size:13px;color:var(--color-text-primary);font-weight:500;">Virginia Galloway</div>
-        <div style="font-size:12px;color:var(--color-text-secondary);">Commissioner, Position 3</div>
-        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px;">Also: Chair Tim Estes · Commissioners Kaecher (Pos. 2) and Dunn (Pos. 1)</div>
-      </div>
-      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;">
-        <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Cobb County (Warren Creek)</div>
-        <div style="font-size:13px;color:var(--color-text-primary);font-weight:500;">Monique Sheffield</div>
-        <div style="font-size:12px;color:var(--color-text-secondary);">Commissioner, District 4</div>
-        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px;">Actively working with Paulding officials — press her to formalize Cobb's position</div>
+    <div class="finding red">
+      <div class="finding-icon">🚫</div>
+      <div class="finding-content">
+        <div class="finding-title">The whole process happened without neighbors knowing</div>
+        <div class="finding-body">The county purchased the land in 2021, selected an operator in 2024, approved a 20-year lease, and issued construction permits — all without a single public hearing. Community Development Director Ann Lippmann confirmed this in writing on April 20, 2026. Because the property has been zoned industrial since 1969, no rezoning was needed — and without rezoning, no hearing was ever legally required.</div>
       </div>
     </div>
-  </div>
 
-  <div class="step-card">
-    <div class="step-header"><div class="step-num">3</div><div class="step-title">Report violations — with specific numbers</div></div>
-    <div class="step-body">Document everything with dated photos and written logs. Report to:</div>
-    <div class="step-detail">
-      Stream buffer or erosion violations → Paulding County Development Division: (770) 443-7571, ext. 2 · Also report to GA EPD Land Protection Branch: land@epd.georgia.gov<br><br>
-      Truck weight violations on Rosedale Drive (18-ton limit) → Paulding County Marshal Bureau and/or GDOT. Note time, direction, company name, plate number.<br><br>
-      Early morning truck staging (3:00 AM) → Once you have the operating contract (Step 1), cite specific clauses when filing complaints with the county and GA EPD.
-    </div>
-  </div>
-
-  <div class="step-card">
-    <div class="step-header"><div class="step-num">4</div><div class="step-title">Use the county's own PFAS admission as leverage</div></div>
-    <div class="step-body">The county attorney's April 14, 2026 statement is a gift: by retaining Arnold and Nitkin LLP to sue PFAS manufacturers, the county implicitly acknowledged contamination of county waste facilities is a real, foreseeable risk. Push on this at every public meeting.</div>
-    <div class="step-detail">
-      Ask the BOC: what baseline water testing will be done on wells and waterways near Reynolds Road before operations begin? · Request the same PFAS monitoring standards the county is seeking from manufacturers be applied to this facility · Monitor whether the litigation scope covers Reynolds Road or only existing landfills
-    </div>
-  </div>
-
-  <div class="step-card">
-    <div class="step-header"><div class="step-num">5</div><div class="step-title">Organize around specific, winnable demands</div></div>
-    <div class="step-body">The cross-county coalition — 1,660+ petition signers, Menllo Station, Warren Creek, Councilmember Antone, Commissioner Sheffield — represents real political pressure. The Ozora Road transfer station in Gwinnett County was withdrawn after sustained community opposition. Focus on demands that are concrete and enforceable:</div>
-    <div class="step-detail">
-      · County-level operating conditions written into a public agreement (no trucks before 7 AM, odor monitoring, noise limits)<br>
-      · Expanded wooded buffer zones beyond the 75-ft minimum<br>
-      · Mandatory PFAS baseline water testing before operations begin<br>
-      · A formal traffic plan for Rosedale Drive with GDOT sign-off<br>
-      · Annual public meeting with Capital Waste Services and county staff
-    </div>
-  </div>
-</div>
-
-<!-- SUPPORTING DATA -->
-<div id="mpanel-data" class="mpanel">
-  <div class="sub-nav">
-    <button class="snav active" onclick="showSub('timeline',this)">Timeline</button>
-    <button class="snav" onclick="showSub('permits',this)">Permits &amp; waivers</button>
-    <button class="snav" onclick="showSub('location',this)">Location &amp; land</button>
-    <button class="snav" onclick="showSub('parties',this)">Who's involved</button>
-    <button class="snav" onclick="showSub('voices',this)">Community voices</button>
-    <button class="snav" onclick="showSub('questions',this)">Questions to ask</button>
-  </div>
-
-  <!-- TIMELINE -->
-  <div id="spanel-timeline" class="spanel active">
-    <div id="tl-body"></div>
-  </div>
-
-  <!-- PERMITS -->
-  <div id="spanel-permits" class="spanel">
-    <div class="ds-label">Issued</div>
-    <div class="permit-row"><div class="pbadge pb-i">Issued</div><div><div class="permit-name">Land Disturbance Permit (LDP)</div><div class="permit-desc">Dec 22, 2025 — authorized erosion control and grading to begin</div></div></div>
-    <div class="permit-row"><div class="pbadge pb-i">Issued</div><div><div class="permit-name">Building permit — citizen drop-off building</div><div class="permit-desc">Dec 31, 2025 to ABUCK Inc.</div></div></div>
-    <div class="permit-row"><div class="pbadge pb-i">Issued</div><div><div class="permit-name">Building permit — main transfer station</div><div class="permit-desc">Jan 20, 2026 to ABUCK Inc.</div></div></div>
-    <div class="permit-row"><div class="pbadge pb-i">Issued</div><div><div class="permit-name">GA EPD Notification of Permit by Rule</div><div class="permit-desc">State permit governing solid waste handling — jointly filed by county and Capital Waste Services. One of the two key documents neighbors should request.</div></div></div>
-    <div class="ds-label" style="margin-top:1.25rem;">Waived or not required</div>
-    <div class="permit-row"><div class="pbadge pb-w">Waived</div><div><div class="permit-name">Traffic impact study</div><div class="permit-desc">NW Georgia Regional Commission exempted the project from a DRI review — no traffic study was ever done</div></div></div>
-    <div class="permit-row"><div class="pbadge pb-w">Not required</div><div><div class="permit-name">Rezoning &amp; special use permits</div><div class="permit-desc">Property zoned I-1 Light Industrial since 1969. No rezoning = no public hearing legally triggered.</div></div></div>
-    <div class="permit-row"><div class="pbadge pb-w">Never held</div><div><div class="permit-name">Public hearings</div><div class="permit-desc">No public hearings at any stage — confirmed in writing by Ann Lippmann, April 20, 2026</div></div></div>
-    <div class="ds-label" style="margin-top:1.25rem;">Pending</div>
-    <div class="permit-row"><div class="pbadge pb-p">Pending</div><div><div class="permit-name">Phase 3 Final ESPC Plan</div><div class="permit-desc">Noted on plan sheets as "will be addressed separately by Dewberry." Due date was TBD as of Sept 2025. Whether submitted before LDP is unconfirmed.</div></div></div>
-    <div class="permit-row"><div class="pbadge pb-p">Future</div><div><div class="permit-name">Notice of termination (NOT)</div><div class="permit-desc">Required once construction concludes — formally closes out the LDP</div></div></div>
-    <div class="ds-label" style="margin-top:1.25rem;">Disputed</div>
-    <div class="permit-row"><div class="pbadge pb-d">Disputed</div><div><div class="permit-name">Stop Work Order — April 6, 2026</div><div class="permit-desc">Inspector cited "Working without a Permit" and "Stream Buffer Violation." Site marked back in compliance by April 14 with no public corrective action documentation.</div></div></div>
-    <div class="permit-row"><div class="pbadge pb-d">Disputed</div><div><div class="permit-name">Operational limitations</div><div class="permit-desc">County confirmed zero operational conditions were applied. Citizens dispute the lack of enforceable county-level guardrails on hours, trucks, and odor.</div></div></div>
-  </div>
-
-  <!-- LOCATION -->
-  <div id="spanel-location" class="spanel">
-    <div class="data-section">
-      <div class="ds-label">Site identification</div>
-      <div class="data-row"><span class="dr-key">Address</span><span class="dr-val">Reynolds Road, Hiram, GA</span></div>
-      <div class="data-row"><span class="dr-key">Parcel number</span><span class="dr-val">178.1.2.020.0000</span></div>
-      <div class="data-row"><span class="dr-key">Zoning</span><span class="dr-val">I-1 Light Industrial (since 1969)</span></div>
-      <div class="data-row"><span class="dr-key">Deed books</span><span class="dr-val">4560/82 · 175/495</span></div>
-      <div class="data-row"><span class="dr-key">Land lot / district</span><span class="dr-val">743 / District 19, Section 2</span></div>
-      <div class="data-row"><span class="dr-key">Total acreage</span><span class="dr-val">26.60 ac (permit docs)</span></div>
-      <div class="data-row"><span class="dr-key">Coordinates</span><span class="dr-val">N 33° 52' 22.63" · W 84° 43' 50.22"</span></div>
-      <div class="data-row"><span class="dr-key">Construction exit GPS</span><span class="dr-val">33.872953 N, -84.730617 W</span></div>
-      <div class="data-row"><span class="dr-key">FEMA flood panel</span><span class="dr-val">Panel 0251C (dated Sept 29, 2006)</span></div>
-    </div>
-    <div class="data-section">
-      <div class="ds-label">Creek buffer zones — all must remain undisturbed</div>
-      <div class="buf-wrap">
-        <div class="buf-seg" style="flex:2;background:#B4B2A9;color:#2C2C2A;">Site</div>
-        <div class="buf-seg" style="flex:3;background:#9FE1CB;color:#085041;">75 ft no impervious</div>
-        <div class="buf-seg" style="flex:4;background:#5DCAA5;color:#04342C;">50 ft county buffer</div>
-        <div class="buf-seg" style="flex:2;background:#1D9E75;color:#E1F5EE;">25 ft state</div>
-        <div class="buf-seg" style="flex:1;background:#378ADD;color:#fff;font-size:9px;">Creek</div>
+    <div class="finding red">
+      <div class="finding-icon">⏰</div>
+      <div class="finding-content">
+        <div class="finding-title">There are no county rules on hours, trucks, or odor</div>
+        <div class="finding-body">The county applied zero operational conditions during plan review. What time trucks can arrive, where they stage, how odor is managed — none of it is governed by anything Paulding County can enforce. It falls entirely to the private contract with Capital Waste Services and GA EPD state rules, neither of which neighbors have seen.</div>
       </div>
-      <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:4px;">Not to scale. April 6, 2026 stop work order indicates at least one zone was breached.</div>
     </div>
-    <div class="data-section">
-      <div class="ds-label">Acreage conflict</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div style="background:#FCEBEB;border:0.5px solid #F09595;border-radius:var(--border-radius-md);padding:10px 12px;">
-          <div style="font-size:11px;color:#A32D2D;font-weight:500;margin-bottom:4px;">Hydrology &amp; permit docs</div>
-          <div style="font-size:20px;font-weight:500;color:#791F1F;">12.24 ac</div>
-        </div>
-        <div style="background:#FCEBEB;border:0.5px solid #F09595;border-radius:var(--border-radius-md);padding:10px 12px;">
-          <div style="font-size:11px;color:#A32D2D;font-weight:500;margin-bottom:4px;">Clearing &amp; grading submittals</div>
-          <div style="font-size:20px;font-weight:500;color:#791F1F;">10.86 ac</div>
+
+    <div class="finding red">
+      <div class="finding-icon">🚛</div>
+      <div class="finding-content">
+        <div class="finding-title">No traffic study was done, despite a weight-limit road</div>
+        <div class="finding-body">The NW Georgia Regional Commission exempted this project from a Development of Regional Impact review — so no traffic study was ever required. Rosedale Drive, the primary truck access road, is a two-lane residential road with a strict 18-ton weight limit. Tractor-trailers will exceed that limit. GDOT is reportedly in discussions but no plan is public.</div>
+      </div>
+    </div>
+
+    <div class="finding amber">
+      <div class="finding-icon">☣️</div>
+      <div class="finding-content">
+        <div class="finding-title">The county's own attorney flagged a cancer-chemical risk</div>
+        <div class="finding-body">At the April 14, 2026 Work Session, the county attorney raised PFAS ("forever chemicals") contamination as a real risk. The county retained the law firm Arnold and Nitkin LLP on contingency to pursue litigation against PFAS manufacturers — an implicit admission that contamination of groundwater is a foreseeable outcome.</div>
+      </div>
+    </div>
+
+    <div class="finding amber">
+      <div class="finding-icon">🚧</div>
+      <div class="finding-content">
+        <div class="finding-title">Construction violated a stream buffer and triggered a stop work order</div>
+        <div class="finding-body">On April 6, 2026, a county inspector issued both a Stop Work Order and a Stream Buffer Violation — meaning work had been done inside the protected buffer zones near the creek. The site was marked "in compliance" the following week, but no corrective action documentation has been made public.</div>
+      </div>
+    </div>
+
+    <div class="finding amber">
+      <div class="finding-icon">📄</div>
+      <div class="finding-content">
+        <div class="finding-title">Key documents in the plan set contradict each other</div>
+        <div class="finding-body">The area of land to be disturbed is listed as 12.24 acres in hydrology and permit documents, and 10.86 acres in clearing and grading submittals — a 1.38-acre gap. This number determines what erosion controls are required and the bonding the county holds. Which figure was used for the Land Disturbance Permit is not publicly confirmed.</div>
+      </div>
+    </div>
+
+    <div class="finding blue">
+      <div class="finding-icon">📣</div>
+      <div class="finding-content">
+        <div class="finding-title">Neighbors across two counties are organized and on record</div>
+        <div class="finding-body">Over 1,660 people signed the Change.org petition. Menllo Station (Paulding) and Warren Creek (Cobb County) residents both spoke publicly. Powder Springs Councilmember Raja Antone formally demanded relocation. Cobb County Commissioner Monique Sheffield is actively working with Paulding officials. The Ozora Road transfer station in Gwinnett County was completely withdrawn after similar opposition — that's a real precedent.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ WHAT TO DO ══ -->
+  <div id="panel-steps" class="panel">
+    <div class="steps-intro">
+      Five concrete actions, in order of priority. Each step builds directly on the last — nothing further is enforceable until you've completed Step 1 and know what rules actually apply.
+    </div>
+
+    <div class="steps-flow">
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Get the two documents that govern everything</div>
+          <div class="step-desc">All operational rules — hours, truck staging, odor, noise — live in exactly two documents: the <strong>Capital Waste Services operating contract</strong> and the <strong>GA EPD Notification of Permit by Rule</strong> (Section 391-3-4-.06(3)(b)). File an Open Records Request under Georgia's Open Records Act (O.C.G.A. § 50-18-70). The county must respond within 3 business days.</div>
+          <div class="step-detail">
+            Also request:<br>
+            · Phase 3 Final Erosion Control Plan (and its submission date vs. the Dec 22, 2025 LDP)<br>
+            · April 6, 2026 Stop Work Order documentation and any GA EPD corrective action<br>
+            · The official LOD figure used for the LDP (12.24 or 10.86 acres?)<br>
+            · The NW Georgia Regional Commission DRI exemption letter
+          </div>
+          <div>
+            <span class="pill blue"><span class="pill-dot"></span>File with: Paulding County Clerk's Office</span>
+            <span class="pill amber"><span class="pill-dot"></span>Response required within 3 business days</span>
+          </div>
         </div>
       </div>
-      <div style="font-size:12px;color:var(--color-text-tertiary);margin-top:6px;">1.38-acre gap — determines erosion control scope and stormwater bonding requirements</div>
+
+      <div class="step-connector">
+        <span class="connector-line">↓ Once you have the documents, you know who violated what — then contact your rep</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Contact the right official for your county</div>
+          <div class="step-desc">Different neighbors, different representatives. Use the specific person whose district actually covers you — a misdirected contact may be ignored. Armed with the records from Step 1, your message carries documented facts they can't easily dismiss.</div>
+          <div class="contact-grid">
+            <div class="contact-card">
+              <div class="contact-county">Paulding County</div>
+              <div class="contact-name">Virginia Galloway</div>
+              <div class="contact-role">Commissioner, Position 3</div>
+              <div class="contact-note">Also: Chair Tim Estes · Commissioners Kaecher (Pos. 2) and Dunn (Pos. 1)</div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-county">Cobb County (Warren Creek)</div>
+              <div class="contact-name">Monique Sheffield</div>
+              <div class="contact-role">Commissioner, District 4</div>
+              <div class="contact-note">Actively working with Paulding officials — press her to formalize Cobb's position in writing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-connector">
+        <span class="connector-line">↓ Contact creates a paper trail — then use it to file enforceable complaints</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Report violations — with specific numbers and dates</div>
+          <div class="step-desc">Document everything with dated photos and written logs. Your records from Step 1 tell you exactly which rules are being broken, and your Step 2 contacts know you're watching. Now report with specifics — vague complaints get ignored, documented ones get investigated.</div>
+          <div class="step-detail">
+            <strong>Stream buffer or erosion violations →</strong> Paulding County Development Division: (770) 443-7571, ext. 2 · Also GA EPD Land Protection Branch: land@epd.georgia.gov<br><br>
+            <strong>Truck weight violations on Rosedale Drive (18-ton limit) →</strong> Paulding County Marshal Bureau and/or GDOT. Note time, direction, company name, plate number.<br><br>
+            <strong>Early morning truck staging (e.g. 3:00 AM) →</strong> Cite specific contract clauses from Step 1 when filing with the county and GA EPD.
+          </div>
+          <span class="pill red"><span class="pill-dot"></span>Always log: date, time, photos, witness name</span>
+        </div>
+      </div>
+
+      <div class="step-connector">
+        <span class="connector-line">↓ Violations create legal leverage — use them to drive the PFAS demand</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Use the county's own PFAS admission as leverage</div>
+          <div class="step-desc">The county attorney's April 14, 2026 statement is a gift: by retaining Arnold &amp; Nitkin LLP to sue PFAS manufacturers, the county implicitly acknowledged contamination of county waste facilities is a real, foreseeable risk. Push this at every public meeting — they've already said it themselves. This directly strengthens any legal arguments from Step 3.</div>
+          <div class="step-detail">
+            · Ask the BOC: what baseline water testing will be done on wells and waterways near Reynolds Road <em>before</em> operations begin?<br>
+            · Request the same PFAS monitoring standards the county seeks from manufacturers be applied here<br>
+            · Monitor whether the litigation scope covers Reynolds Road or only existing landfills
+          </div>
+          <span class="pill red"><span class="pill-dot"></span>The county's own attorney created this opening — use it</span>
+        </div>
+      </div>
+
+      <div class="step-connector">
+        <span class="connector-line">↓ Legal pressure + public record = coalition power for winnable demands</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Organize around specific, winnable demands</div>
+          <div class="step-desc">The cross-county coalition — 1,660+ petition signers, Menllo Station, Warren Creek, Councilmember Antone, Commissioner Sheffield — represents real political pressure. By this point you have records, contacts, a violation trail, and PFAS leverage. The Ozora Road transfer station in Gwinnett County was withdrawn entirely after sustained community opposition. Focus on demands that are concrete and enforceable:</div>
+          <div class="step-detail">
+            · County-level operating conditions in a public agreement (no trucks before 7 AM, odor monitoring, noise limits)<br>
+            · Expanded wooded buffer zones beyond the 75-ft minimum<br>
+            · Mandatory PFAS baseline water testing before operations begin<br>
+            · A formal traffic plan for Rosedale Drive with GDOT sign-off<br>
+            · Annual public meeting with Capital Waste Services and county staff
+          </div>
+          <span class="pill blue"><span class="pill-dot"></span>Precedent: Ozora Road, Gwinnett Co. — fully withdrawn after community action</span>
+        </div>
+      </div>
+
     </div>
-    <div class="data-section">
-      <div class="ds-label">Adjacent locations</div>
-      <div class="data-row"><span class="dr-key">Menllo Station</span><span class="dr-val">Adjacent neighborhood, Paulding Co.</span></div>
-      <div class="data-row"><span class="dr-key">Warren Creek Dr</span><span class="dr-val">Downstream, Cobb County</span></div>
-      <div class="data-row"><span class="dr-key">Rosedale Drive</span><span class="dr-val">Primary truck access road (18-ton limit)</span></div>
+  </div>
+
+  <!-- ══ SUPPORTING DATA ══ -->
+  <div id="panel-data" class="panel">
+
+    <div class="sub-tabs">
+      <button class="sub-btn active" onclick="showSub('timeline', this)">Timeline</button>
+      <button class="sub-btn" onclick="showSub('permits', this)">Permits</button>
+      <button class="sub-btn" onclick="showSub('location', this)">Location</button>
+      <button class="sub-btn" onclick="showSub('parties', this)">Who's Involved</button>
+      <button class="sub-btn" onclick="showSub('voices', this)">Community Voices</button>
+      <button class="sub-btn" onclick="showSub('questions', this)">Questions to Ask</button>
     </div>
-  </div>
 
-  <!-- PARTIES -->
-  <div id="spanel-parties" class="spanel">
-    <div class="ds-label">Government &amp; agencies</div>
-    <div class="party-row"><div class="party-av av-g">BOC</div><div><div class="party-name">Paulding County Board of Commissioners</div><div class="party-desc">Purchased land, approved 20-year lease. Chair: Tim Estes · Galloway (Pos. 3) · Kaecher (Pos. 2) · Dunn (Pos. 1)</div></div></div>
-    <div class="party-row"><div class="party-av av-g">CD</div><div><div class="party-name">Paulding County Community Development</div><div class="party-desc">Director: Ann Lippmann, AICP — confirmed no hearings and no operational conditions. Reviewers: Bruce Coyle, Carter Reese, and others.</div></div></div>
-    <div class="party-row"><div class="party-av av-g">EPD</div><div><div class="party-name">GA Environmental Protection Division</div><div class="party-desc">Issued the Permit by Rule governing operational standards. One of the two key documents neighbors should request.</div></div></div>
-    <div class="party-row"><div class="party-av av-g">RC</div><div><div class="party-name">NW Georgia Regional Commission</div><div class="party-desc">Exempted the project from a DRI study — removing the requirement for a traffic impact study entirely.</div><div class="party-conflict">This determination is a key disputed point.</div></div></div>
-    <div class="ds-label" style="margin-top:1.25rem;">Companies</div>
-    <div class="party-row"><div class="party-av av-c">CW</div><div><div class="party-name">Capital Waste Services LLC</div><div class="party-desc">20-year operator. CEO Matt Parker. COO Brian Ystston. VP Transfer Stations: John Merchie.</div><div class="party-conflict">For-profit vendor managing intense community backlash on hours and odor.</div></div></div>
-    <div class="party-row"><div class="party-av av-c">DE</div><div><div class="party-name">Dewberry Engineers Inc.</div><div class="party-desc">Primary civil engineering firm. Phase 3 ESPC Plan noted as pending a separate Dewberry submission.</div></div></div>
-    <div class="party-row"><div class="party-av av-c">AEC</div><div><div class="party-name">Advanced Engineering Consultants (AEC)</div><div class="party-desc">Stormwater and hydrology. W. Russell Folsom, PE (GASWCC Level II). Their LOD figure (12.24 ac) conflicts with clearing/grading submittals (10.86 ac).</div></div></div>
-    <div class="party-row"><div class="party-av av-c">WD</div><div><div class="party-name">Wayne Davis Concrete</div><div class="party-desc">Neighboring concrete plant. A noise complaint was misattributed to the transfer station before being traced here. Their water vault conflicts with the proposed driveway.</div><div class="party-conflict">Water vault sits inside proposed transfer station driveway.</div></div></div>
-    <div class="ds-label" style="margin-top:1.25rem;">Opposing officials</div>
-    <div class="party-row"><div class="party-av av-x">MS</div><div><div class="party-name">Commissioner Monique Sheffield — Cobb Co. District 4</div><div class="party-desc">Represents Warren Creek residents. Actively working with Paulding officials.</div><div class="party-conflict">Represents constituents with no vote in Paulding County decisions.</div></div></div>
-    <div class="party-row"><div class="party-av av-x">RA</div><div><div class="party-name">Councilmember Raja Antone — Powder Springs</div><div class="party-desc">Submitted a formal statement demanding the station be moved immediately.</div></div></div>
-    <div class="ds-label" style="margin-top:1.25rem;">Community</div>
-    <div class="party-row"><div class="party-av av-n">MS</div><div><div class="party-name">Menllo Station subdivision</div><div class="party-desc">Adjacent neighborhood. Key voices: Janice Philpot, Carolyn Crowe, Tammy Day.</div><div class="party-conflict">Fear pest influx, 10–20% property value loss, health impacts.</div></div></div>
-    <div class="party-row"><div class="party-av av-n">WC</div><div><div class="party-name">Warren Creek neighborhood — Cobb County</div><div class="party-desc">Downstream neighborhood. Brad McMahan, Donna Gates. No vote in Paulding County.</div><div class="party-conflict">Bears the facility's externalities with no political representation.</div></div></div>
-    <div class="party-row"><div class="party-av av-n">ZW</div><div><div class="party-name">Zach Winsett</div><div class="party-desc">Organized the Change.org petition — 1,660+ signatures as of May 2026.</div></div></div>
-    <div class="party-row"><div class="party-av av-n">KS</div><div><div class="party-name">K Slade</div><div class="party-desc">Filed the Public Records Request on April 16, 2026 — the response confirmed no public hearings were held.</div></div></div>
-  </div>
-
-  <!-- VOICES -->
-  <div id="spanel-voices" class="spanel">
-    <div style="background:#FCEBEB;border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;">
-      <div style="font-size:13px;font-weight:500;color:#A32D2D;margin-bottom:3px;">Change.org petition — 1,660+ signatures</div>
-      <div style="font-size:13px;color:#A32D2D;line-height:1.6;">Started March 18, 2026 by Zach Winsett. Demanded: no early truck staging, trucks off residential roads, expanded wooded buffers.</div>
+    <!-- Timeline -->
+    <div id="sub-timeline" class="sub-panel active">
+      <div class="card"><div id="tl-body" style="padding: 0 16px;"></div></div>
     </div>
-    <div class="ds-label">Menllo Station — April 14, 2026 work session</div>
-    <div class="voice-card"><div class="voice-name">Janice Philpot</div><div class="voice-text">Raised fears about long-term health effects on children, non-smoking cancer risks, and the complete lack of public notice to the neighborhood.</div></div>
-    <div class="voice-card"><div class="voice-name">Carolyn Crowe</div><div class="voice-text">Complained about anticipated noise, smell, heavy truck traffic, and property value loss. Said the county should have chosen a remote area.</div></div>
-    <div class="voice-card"><div class="voice-name">Tammy Day</div><div class="voice-text">Highlighted Rosedale Drive's 18-ton weight limit that tractor-trailers will violate. Cited fears of 10–20% property value loss and pest influx. Suggested relocating near the airport.</div></div>
-    <div class="ds-label" style="margin-top:1rem;">Warren Creek — CBS Atlanta, May 4, 2026</div>
-    <div class="voice-card"><div class="voice-name">Brad McMahan</div><div class="voice-text">Criticized the lack of consideration for neighbors and predicted Rosedale Road would be overwhelmed with trucks.</div></div>
-    <div class="voice-card"><div class="voice-name">Donna Gates</div><div class="voice-text">Pleaded with the Paulding Board of Commissioners to move the station, citing threats to clean air.</div></div>
-    <div class="ds-label" style="margin-top:1rem;">Official statements</div>
-    <div class="voice-card"><div class="voice-name">Councilmember Raja Antone — Powder Springs</div><div class="voice-text">Formally demanded the station be moved immediately — cited threats of chaos, property value loss, and persistent health costs for Cobb County residents.</div></div>
-    <div class="voice-card"><div class="voice-name">Commissioner Monique Sheffield — Cobb Co. District 4</div><div class="voice-text">Actively working with Paulding officials to address Warren Creek residents' concerns.</div></div>
-    <div class="voice-card"><div class="voice-name">Paulding County Attorney — April 14, 2026</div><div class="voice-text">Raised PFAS contamination risk and announced Arnold and Nitkin LLP retained on contingency — the county's own implicit admission of environmental liability.</div></div>
-  </div>
 
-  <!-- QUESTIONS -->
-  <div id="spanel-questions" class="spanel">
-    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1rem;">All grounded in documented facts. Bring these to meetings, public comment sessions, or Open Records Requests.</div>
-    <div class="ds-label">Process &amp; notice</div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">Why were no public hearings held at any stage — not for the land purchase, the operator selection, or the permitting?</span></div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">Why was the property purchase placed on the consent agenda rather than as a standalone item with public comment?</span></div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">When and how were neighboring residents first notified that this facility was being planned?</span></div>
-    <div class="ds-label" style="margin-top:1rem;">Traffic &amp; operations</div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">Why did the Regional Commission exempt this project from a DRI review — and therefore from a traffic study — despite documented concerns about Rosedale Drive?</span></div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">Does Rosedale Drive's 18-ton weight limit apply to transfer station trucks? Who enforces it and who pays for road damage?</span></div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">The county imposed zero operational conditions. What recourse do neighbors have if trucks arrive at 3:00 AM?</span></div>
-    <div class="ds-label" style="margin-top:1rem;">Documents &amp; environment</div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">The Limits of Disturbance are listed as 12.24 acres in some documents and 10.86 acres in others. Which figure was used for the LDP?</span></div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">Was the Phase 3 Erosion Control Plan finalized before the LDP was issued in December 2025?</span></div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">Given the county attorney's PFAS admission, what baseline water testing will be done near Reynolds Road before operations begin?</span></div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">What resulted from the April 6, 2026 stream buffer violation? Was a corrective action report filed with GA EPD?</span></div>
-    <div class="ds-label" style="margin-top:1rem;">The 20-year lease</div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">What are the county's exit terms if community or environmental concerns escalate?</span></div>
-    <div class="data-row" style="flex-direction:column;align-items:flex-start;gap:4px;"><span style="font-size:14px;color:var(--color-text-primary);">Were neighboring property owners given any opportunity to negotiate mitigation measures before the lease was signed?</span></div>
-  </div>
+    <!-- Permits -->
+    <div id="sub-permits" class="sub-panel">
+      <div class="card">
+        <div class="card-header"><div class="card-header-label">Issued</div></div>
+        <div class="permit-row"><div class="pbadge pb-i">Issued</div><div><div class="permit-name">Land Disturbance Permit (LDP)</div><div class="permit-desc">Dec 22, 2025 — authorized erosion control and grading to begin</div></div></div>
+        <div class="permit-row"><div class="pbadge pb-i">Issued</div><div><div class="permit-name">Building permit — citizen drop-off building</div><div class="permit-desc">Dec 31, 2025 to ABUCK Inc.</div></div></div>
+        <div class="permit-row"><div class="pbadge pb-i">Issued</div><div><div class="permit-name">Building permit — main transfer station</div><div class="permit-desc">Jan 20, 2026 to ABUCK Inc.</div></div></div>
+        <div class="permit-row"><div class="pbadge pb-i">Issued</div><div><div class="permit-name">GA EPD Notification of Permit by Rule</div><div class="permit-desc">State permit governing solid waste handling — one of the two key documents neighbors should request.</div></div></div>
+      </div>
+      <div class="card-group-label">Waived or not required</div>
+      <div class="card">
+        <div class="permit-row"><div class="pbadge pb-w">Waived</div><div><div class="permit-name">Traffic impact study</div><div class="permit-desc">NW Georgia Regional Commission exempted the project from DRI review — no traffic study was ever done.</div></div></div>
+        <div class="permit-row"><div class="pbadge pb-w">Not required</div><div><div class="permit-name">Rezoning &amp; special use permits</div><div class="permit-desc">Property zoned I-1 Light Industrial since 1969. No rezoning = no public hearing legally triggered.</div></div></div>
+        <div class="permit-row"><div class="pbadge pb-w">Never held</div><div><div class="permit-name">Public hearings</div><div class="permit-desc">Confirmed in writing by Ann Lippmann, April 20, 2026.</div></div></div>
+      </div>
+      <div class="card-group-label">Pending / disputed</div>
+      <div class="card">
+        <div class="permit-row"><div class="pbadge pb-p">Pending</div><div><div class="permit-name">Phase 3 Final ESPC Plan</div><div class="permit-desc">Noted as "will be addressed separately by Dewberry." Due date was TBD as of Sept 2025. Whether submitted before LDP is unconfirmed.</div></div></div>
+        <div class="permit-row"><div class="pbadge pb-p">Future</div><div><div class="permit-name">Notice of Termination (NOT)</div><div class="permit-desc">Required once construction concludes — formally closes out the LDP.</div></div></div>
+        <div class="permit-row"><div class="pbadge pb-d">Disputed</div><div><div class="permit-name">Stop Work Order — April 6, 2026</div><div class="permit-desc">Inspector cited "Working without a Permit" and "Stream Buffer Violation." Site marked back in compliance by April 14 with no public corrective action documentation.</div></div></div>
+        <div class="permit-row"><div class="pbadge pb-d">Disputed</div><div><div class="permit-name">Operational limitations</div><div class="permit-desc">County confirmed zero operational conditions were applied. Citizens dispute the lack of enforceable guardrails on hours, trucks, and odor.</div></div></div>
+      </div>
+    </div>
 
-</div>
-</div>
+    <!-- Location -->
+    <div id="sub-location" class="sub-panel">
+      <div class="card">
+        <div class="card-header"><div class="card-header-label">Site identification</div></div>
+        <div class="data-row"><span class="dr-key">Address</span><span class="dr-val">Reynolds Road, Hiram, GA</span></div>
+        <div class="data-row"><span class="dr-key">Parcel #</span><span class="dr-val">178.1.2.020.0000</span></div>
+        <div class="data-row"><span class="dr-key">Zoning</span><span class="dr-val">I-1 Light Industrial (1969)</span></div>
+        <div class="data-row"><span class="dr-key">Total acreage</span><span class="dr-val">26.60 ac</span></div>
+        <div class="data-row"><span class="dr-key">Coordinates</span><span class="dr-val">N 33° 52' 22.63" W 84° 43' 50.22"</span></div>
+        <div class="data-row"><span class="dr-key">FEMA flood panel</span><span class="dr-val">Panel 0251C (Sept 29, 2006)</span></div>
+      </div>
+
+      <div class="card-group-label">Acreage conflict</div>
+      <div class="card">
+        <div class="conflict-grid">
+          <div class="conflict-box">
+            <div class="conflict-label">Hydrology &amp; permit docs</div>
+            <div class="conflict-val">12.24 ac</div>
+          </div>
+          <div class="conflict-box">
+            <div class="conflict-label">Clearing &amp; grading submittals</div>
+            <div class="conflict-val">10.86 ac</div>
+          </div>
+        </div>
+        <div class="note">1.38-acre gap — determines erosion control scope and stormwater bonding requirements</div>
+      </div>
+
+      <div class="card-group-label">Creek buffer zones</div>
+      <div class="card">
+        <div class="buf-wrap">
+          <div class="buf-seg" style="flex:2;background:#c9c9c9;color:#333;">Site</div>
+          <div class="buf-seg" style="flex:3;background:#9FE1CB;color:#085041;">75 ft no impervious</div>
+          <div class="buf-seg" style="flex:4;background:#5DCAA5;color:#04342C;">50 ft county buffer</div>
+          <div class="buf-seg" style="flex:2;background:#1D9E75;color:#E1F5EE;">25 ft state</div>
+          <div class="buf-seg" style="flex:1;background:var(--blue);color:#fff;font-size:8px;">Creek</div>
+        </div>
+        <div class="note">Not to scale. April 6, 2026 stop work order indicates at least one zone was breached.</div>
+      </div>
+
+      <div class="card-group-label">Adjacent locations</div>
+      <div class="card">
+        <div class="data-row"><span class="dr-key">Menllo Station</span><span class="dr-val">Adjacent, Paulding Co.</span></div>
+        <div class="data-row"><span class="dr-key">Warren Creek Dr</span><span class="dr-val">Downstream, Cobb County</span></div>
+        <div class="data-row"><span class="dr-key">Rosedale Drive</span><span class="dr-val">Primary truck access (18-ton limit)</span></div>
+      </div>
+    </div>
+
+    <!-- Parties -->
+    <div id="sub-parties" class="sub-panel">
+      <div class="card-group-label">Government &amp; agencies</div>
+      <div class="card">
+        <div class="party-row"><div class="party-av av-g">BOC</div><div><div class="party-name">Paulding County Board of Commissioners</div><div class="party-desc">Purchased land, approved 20-year lease. Chair: Tim Estes · Galloway (Pos. 3) · Kaecher (Pos. 2) · Dunn (Pos. 1)</div></div></div>
+        <div class="party-row"><div class="party-av av-g">CD</div><div><div class="party-name">Paulding County Community Development</div><div class="party-desc">Director: Ann Lippmann, AICP — confirmed no hearings and no operational conditions in writing. Reviewers: Bruce Coyle, Carter Reese.</div></div></div>
+        <div class="party-row"><div class="party-av av-g">EPD</div><div><div class="party-name">GA Environmental Protection Division</div><div class="party-desc">Issued the Permit by Rule governing operational standards. One of the two key documents neighbors should request.</div></div></div>
+        <div class="party-row"><div class="party-av av-g">RC</div><div><div class="party-name">NW Georgia Regional Commission</div><div class="party-desc">Exempted the project from a DRI study — removing the requirement for a traffic impact study entirely.</div><div class="party-conflict">This determination is a key disputed point.</div></div></div>
+      </div>
+
+      <div class="card-group-label">Companies</div>
+      <div class="card">
+        <div class="party-row"><div class="party-av av-c">CW</div><div><div class="party-name">Capital Waste Services LLC</div><div class="party-desc">20-year operator. CEO Matt Parker. COO Brian Ystston. VP Transfer Stations: John Merchie.</div><div class="party-conflict">For-profit vendor managing intense community backlash on hours and odor.</div></div></div>
+        <div class="party-row"><div class="party-av av-c">DE</div><div><div class="party-name">Dewberry Engineers Inc.</div><div class="party-desc">Primary civil engineering firm. Phase 3 ESPC Plan noted as pending a separate Dewberry submission.</div></div></div>
+        <div class="party-row"><div class="party-av av-c">AEC</div><div><div class="party-name">Advanced Engineering Consultants</div><div class="party-desc">Stormwater and hydrology. Their LOD figure (12.24 ac) conflicts with clearing/grading submittals (10.86 ac).</div></div></div>
+        <div class="party-row"><div class="party-av av-c">WD</div><div><div class="party-name">Wayne Davis Concrete</div><div class="party-desc">Neighboring concrete plant. Water vault conflicts with the proposed transfer station driveway.</div><div class="party-conflict">Water vault sits inside proposed transfer station driveway.</div></div></div>
+      </div>
+
+      <div class="card-group-label">Opposing officials</div>
+      <div class="card">
+        <div class="party-row"><div class="party-av av-x">MS</div><div><div class="party-name">Commissioner Monique Sheffield — Cobb Co. Dist. 4</div><div class="party-desc">Represents Warren Creek residents. Actively working with Paulding officials.</div><div class="party-conflict">Represents constituents with no vote in Paulding County decisions.</div></div></div>
+        <div class="party-row"><div class="party-av av-x">RA</div><div><div class="party-name">Councilmember Raja Antone — Powder Springs</div><div class="party-desc">Submitted a formal statement demanding the station be moved immediately.</div></div></div>
+      </div>
+
+      <div class="card-group-label">Community</div>
+      <div class="card">
+        <div class="party-row"><div class="party-av av-n">MS</div><div><div class="party-name">Menllo Station subdivision</div><div class="party-desc">Adjacent neighborhood. Key voices: Janice Philpot, Carolyn Crowe, Tammy Day.</div><div class="party-conflict">Fear pest influx, 10–20% property value loss, health impacts.</div></div></div>
+        <div class="party-row"><div class="party-av av-n">WC</div><div><div class="party-name">Warren Creek — Cobb County</div><div class="party-desc">Downstream neighborhood. Brad McMahan, Donna Gates. No vote in Paulding County.</div><div class="party-conflict">Bears the facility's externalities with no political representation.</div></div></div>
+        <div class="party-row"><div class="party-av av-n">ZW</div><div><div class="party-name">Zach Winsett</div><div class="party-desc">Organized the Change.org petition — 1,660+ signatures as of May 2026.</div></div></div>
+        <div class="party-row"><div class="party-av av-n">KS</div><div><div class="party-name">K Slade</div><div class="party-desc">Filed the Public Records Request on April 16, 2026 — the response confirmed no public hearings were held.</div></div></div>
+      </div>
+    </div>
+
+    <!-- Voices -->
+    <div id="sub-voices" class="sub-panel">
+      <div style="background:var(--red-bg);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:14px;border:0.5px solid rgba(255,59,48,0.15);">
+        <div style="font-size:13px;font-weight:600;color:var(--red-text);margin-bottom:3px;">Change.org petition — 1,660+ signatures</div>
+        <div style="font-size:13px;color:var(--red-text);line-height:1.6;">Started March 18, 2026 by Zach Winsett. Demanded: no early truck staging, trucks off residential roads, expanded wooded buffers.</div>
+      </div>
+      <div class="card-group-label">Menllo Station — April 14, 2026 work session</div>
+      <div class="card">
+        <div class="voice-card"><div class="voice-name">Janice Philpot</div><div class="voice-text">Raised fears about long-term health effects on children, non-smoking cancer risks, and the complete lack of public notice to the neighborhood.</div></div>
+        <div class="voice-card"><div class="voice-name">Carolyn Crowe</div><div class="voice-text">Complained about anticipated noise, smell, heavy truck traffic, and property value loss. Said the county should have chosen a remote area.</div></div>
+        <div class="voice-card"><div class="voice-name">Tammy Day</div><div class="voice-text">Highlighted Rosedale Drive's 18-ton weight limit that tractor-trailers will violate. Cited fears of 10–20% property value loss and pest influx. Suggested relocating near the airport.</div></div>
+      </div>
+      <div class="card-group-label">Warren Creek — CBS Atlanta, May 4, 2026</div>
+      <div class="card">
+        <div class="voice-card"><div class="voice-name">Brad McMahan</div><div class="voice-text">Criticized the lack of consideration for neighbors and predicted Rosedale Road would be overwhelmed with trucks.</div></div>
+        <div class="voice-card"><div class="voice-name">Donna Gates</div><div class="voice-text">Pleaded with the Paulding Board of Commissioners to move the station, citing threats to clean air.</div></div>
+      </div>
+      <div class="card-group-label">Official statements</div>
+      <div class="card">
+        <div class="voice-card"><div class="voice-name">Councilmember Raja Antone — Powder Springs</div><div class="voice-text">Formally demanded the station be moved immediately — cited threats of chaos, property value loss, and persistent health costs for Cobb County residents.</div></div>
+        <div class="voice-card"><div class="voice-name">Commissioner Monique Sheffield — Cobb Co. District 4</div><div class="voice-text">Actively working with Paulding officials to address Warren Creek residents' concerns.</div></div>
+        <div class="voice-card"><div class="voice-name">Paulding County Attorney — April 14, 2026</div><div class="voice-text">Raised PFAS contamination risk and announced Arnold and Nitkin LLP retained on contingency — the county's own implicit admission of environmental liability.</div></div>
+      </div>
+    </div>
+
+    <!-- Questions -->
+    <div id="sub-questions" class="sub-panel">
+      <div style="font-size:13px;color:var(--text3);line-height:1.6;margin-bottom:14px;background:var(--blue-bg);border-radius:var(--radius-md);padding:12px 14px;border:0.5px solid rgba(0,122,255,0.15);">All grounded in documented facts. Bring these to meetings, public comment sessions, or Open Records Requests.</div>
+      <div class="card-group-label">Process &amp; notice</div>
+      <div class="card">
+        <div class="q-item">Why were no public hearings held at any stage — not for the land purchase, the operator selection, or the permitting?</div>
+        <div class="q-item">Why was the property purchase placed on the consent agenda rather than as a standalone item with public comment?</div>
+        <div class="q-item">When and how were neighboring residents first notified that this facility was being planned?</div>
+      </div>
+      <div class="card-group-label">Traffic &amp; operations</div>
+      <div class="card">
+        <div class="q-item">Why did the Regional Commission exempt this project from a DRI review — and therefore from a traffic study — despite documented concerns about Rosedale Drive?</div>
+        <div class="q-item">Does Rosedale Drive's 18-ton weight limit apply to transfer station trucks? Who enforces it and who pays for road damage?</div>
+        <div class="q-item">The county imposed zero operational conditions. What recourse do neighbors have if trucks arrive at 3:00 AM?</div>
+      </div>
+      <div class="card-group-label">Documents &amp; environment</div>
+      <div class="card">
+        <div class="q-item">The Limits of Disturbance are listed as 12.24 acres in some documents and 10.86 acres in others. Which figure was used for the LDP?</div>
+        <div class="q-item">Was the Phase 3 Erosion Control Plan finalized before the LDP was issued in December 2025?</div>
+        <div class="q-item">Given the county attorney's PFAS admission, what baseline water testing will be done near Reynolds Road before operations begin?</div>
+        <div class="q-item">What resulted from the April 6, 2026 stream buffer violation? Was a corrective action report filed with GA EPD?</div>
+      </div>
+      <div class="card-group-label">The 20-year lease</div>
+      <div class="card">
+        <div class="q-item">What are the county's exit terms if community or environmental concerns escalate?</div>
+        <div class="q-item">Were neighboring property owners given any opportunity to negotiate mitigation measures before the lease was signed?</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-data -->
+
+</main>
 
 <script>
 const tlEvents=[
@@ -451,22 +1028,25 @@ function renderTL(){
   let h='',ly=null;
   for(const e of tlEvents){
     const yr=getYrLabel(e.year);
-    if(yr!==ly){h+=`<div class="tl-year">${yr}</div>`;ly=yr;}
+    if(yr!==ly){h+=`<div class="tl-year-label">${yr}</div>`;ly=yr;}
     h+=`<div class="tl-item"><div class="tl-dot ${catDot[e.cat]||'dot-p'}"></div><div class="tl-date">${e.date}</div><div class="tl-text">${e.event}${e.flag?'<br>'+flagEl[e.flag]:''}</div></div>`;
   }
   document.getElementById('tl-body').innerHTML=h;
 }
-function showMain(id,btn){
-  document.querySelectorAll('.mpanel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.mnav').forEach(b=>b.classList.remove('active'));
-  document.getElementById('mpanel-'+id).classList.add('active');
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
   btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function showSub(id,btn){
-  document.querySelectorAll('.spanel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.snav').forEach(b=>b.classList.remove('active'));
-  document.getElementById('spanel-'+id).classList.add('active');
+  document.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sub-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sub-'+id).classList.add('active');
   btn.classList.add('active');
 }
 renderTL();
 </script>
+</body>
+</html>
